@@ -111,7 +111,64 @@ namespace CGL
   {
     // TODO Part 4.
     // This method should flip the given edge and return an iterator to the flipped edge.
-    return EdgeIter();
+    if (e0->isBoundary()) goto finish;
+      
+    HalfedgeIter BC(e0->halfedge());
+    HalfedgeIter CB(BC->twin());
+
+    HalfedgeIter CD(BC->next());
+    HalfedgeIter DC(CD->twin());
+    HalfedgeIter DB(CD->next());
+    HalfedgeIter BD(DB->twin());
+
+    HalfedgeIter BA(CB->next());
+    HalfedgeIter AB(BA->twin());
+    HalfedgeIter AC(BA->next());
+    HalfedgeIter CA(AC->twin());
+
+    EdgeIter A_B(AB->edge());
+    EdgeIter B_D(BD->edge());
+    EdgeIter C_D(DC->edge());
+    EdgeIter A_C(CA->edge());
+    EdgeIter B_C(BC->edge());
+
+    FaceIter ABC(CB->face());
+    FaceIter BCD(BC->face());
+
+    VertexIter D = DC->vertex();
+    VertexIter C = CB->vertex();
+    VertexIter B = BC->vertex();
+    VertexIter A = AB->vertex();
+
+    BC->setNeighbors(CD, CB, A, B_C, BCD);
+    CD->setNeighbors(DB, BD, D, B_D, BCD);
+    DB->setNeighbors(BC, AB, B, A_B, BCD);
+
+    CB->setNeighbors(BA, BC, D, B_C, ABC);
+    BA->setNeighbors(AC, CA, A, A_C, ABC);
+    AC->setNeighbors(CB, DC, C, C_D, ABC);
+
+    CA->setNeighbors(CA->next(), BA, C, A_C, CA->face());
+    DC->setNeighbors(DC->next(), AC, D, C_D, DC->face());
+    BD->setNeighbors(BD->next(), CD, B, B_D, BD->face());
+    AB->setNeighbors(AB->next(), DB, A, A_B, AB->face());
+
+    D->halfedge() = CB;
+    C->halfedge() = AC;
+    B->halfedge() = DB;
+    A->halfedge() = BC;
+
+    A_B->halfedge() = AB;
+    A_C->halfedge() = CA;
+    B_C->halfedge() = BC;
+    B_D->halfedge() = CD;
+    C_D->halfedge() = DC;
+
+    ABC->halfedge() = BA;
+    BCD->halfedge() = CD;
+
+finish:
+    return e0;
   }
 
   VertexIter HalfedgeMesh::splitEdge( EdgeIter e0 )
