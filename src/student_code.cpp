@@ -176,6 +176,90 @@ finish:
     // TODO Part 5.
     // This method should split the given edge and return an iterator to the newly inserted vertex.
     // The halfedge of this vertex should point along the edge that was split, rather than the new edges.
+      if (e0->isBoundary()) goto finish;
+      HalfedgeIter BC(e0->halfedge());
+      HalfedgeIter CB(BC->twin());
+
+      HalfedgeIter CD(BC->next());
+      HalfedgeIter DC(CD->twin());
+      HalfedgeIter DB(CD->next());
+      HalfedgeIter BD(DB->twin());
+
+      HalfedgeIter BA(CB->next());
+      HalfedgeIter AB(BA->twin());
+      HalfedgeIter AC(BA->next());
+      HalfedgeIter CA(AC->twin());
+
+      EdgeIter A_B(AB->edge());
+      EdgeIter B_D(BD->edge());
+      EdgeIter C_D(DC->edge());
+      EdgeIter A_C(CA->edge());
+
+      FaceIter ABC(CB->face());
+      FaceIter BCD(BC->face());
+
+      VertexIter D = DC->vertex();
+      VertexIter C = CB->vertex();
+      VertexIter B = BC->vertex();
+      VertexIter A = AB->vertex();
+
+      VertexIter M = newVertex();
+
+      EdgeIter M_A = newEdge();
+      EdgeIter M_B = newEdge();
+      EdgeIter M_C(BC->edge());
+      EdgeIter M_D = newEdge();
+
+      FaceIter MAB = newFace();
+      FaceIter MCD = newFace();
+
+      HalfedgeIter MC = newHalfedge();
+      HalfedgeIter MB = newHalfedge();
+      HalfedgeIter MA = newHalfedge();
+      HalfedgeIter MD = newHalfedge();
+      HalfedgeIter DM = newHalfedge();
+      HalfedgeIter AM = newHalfedge();
+
+      AC->setNeighbors(CB, CA, A, A_C, ABC);
+      CB->setNeighbors(MA, MC, C, M_C, ABC);
+      MA->setNeighbors(AC, AM, M, M_A, ABC);
+
+      CD->setNeighbors(DM, DC, C, C_D, MCD);
+      DM->setNeighbors(MC, MD, D, M_D, MCD);
+      MC->setNeighbors(CD, CB, M, M_C, MCD);
+
+      DB->setNeighbors(BC, BD, D, B_D, BCD);
+      BC->setNeighbors(MD, MB, B, M_B, BCD);
+      MD->setNeighbors(DB, DM, M, M_D, BCD);
+
+      BA->setNeighbors(AM, AB, B, A_B, MAB);
+      AM->setNeighbors(MB, MA, A, M_A, MAB);
+      MB->setNeighbors(BA, BC, M, M_B, MAB);
+
+      D->halfedge() = DB;
+      C->halfedge() = CD;
+      B->halfedge() = BA;
+      A->halfedge() = AC;
+      M->halfedge() = MA;
+
+      A_B->halfedge() = AB;
+      A_C->halfedge() = CA;
+      B_D->halfedge() = CD;
+      C_D->halfedge() = DC;
+
+      M_A->halfedge() = MA;
+      M_B->halfedge() = MB;
+      M_C->halfedge() = MC;
+      M_D->halfedge() = MD;
+
+      ABC->halfedge() = CB;
+      BCD->halfedge() = BC;
+      MAB->halfedge() = AM;
+      MCD->halfedge() = DM;
+
+      M->position = (A->position +B->position + C->position + D->position) / 4;
+
+  finish:
     return VertexIter();
   }
 
