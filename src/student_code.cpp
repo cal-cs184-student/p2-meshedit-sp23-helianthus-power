@@ -176,6 +176,7 @@ finish:
     // TODO Part 5.
     // This method should split the given edge and return an iterator to the newly inserted vertex.
     // The halfedge of this vertex should point along the edge that was split, rather than the new edges.
+      VertexIter M = newVertex();
       if (e0->isBoundary()) goto finish;
       HalfedgeIter BC(e0->halfedge());
       HalfedgeIter CB(BC->twin());
@@ -202,8 +203,6 @@ finish:
       VertexIter C = CB->vertex();
       VertexIter B = BC->vertex();
       VertexIter A = AB->vertex();
-
-      VertexIter M = newVertex();
 
       EdgeIter M_A = newEdge();
       EdgeIter M_B = newEdge();
@@ -252,6 +251,11 @@ finish:
       M_C->halfedge() = MC;
       M_D->halfedge() = MD;
 
+      M_A->isNew = true;
+      M_D->isNew = true;
+
+      M->isNew = true;
+
       ABC->halfedge() = CB;
       BCD->halfedge() = BC;
       MAB->halfedge() = AM;
@@ -260,7 +264,7 @@ finish:
       M->position = (B->position + C->position) / 2;
 
   finish:
-    return VertexIter();
+    return M;
   }
 
 
@@ -285,6 +289,56 @@ finish:
     // 4. Flip any new edge that connects an old and new vertex.
 
     // 5. Copy the new vertex positions into final Vertex::position.
+      for (VertexIter v = mesh.verticesBegin(); v != mesh.verticesEnd(); v++) {
+          HalfedgeIter e = v->halfedge();
+          Vector3D neighbor_sum(0, 0, 0);
+          int n = 0;
+          v->isNew = false;
+          while(true) {
+              neighbor_sum += e->next()->vertex()->position;
+              e = e->next()->next()->twin();
+              n++;
+              if (e == v->halfedge()) {
+                  break;
+              }
+          }
+          float u = ((n == 3) ? (static_cast<float>(3) / 16) : (3 / (static_cast<float>(8) * n)));
+          v->newPosition = (1 - n * u) * v->position + u * neighbor_sum;
+      }
+      for (EdgeIter e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++) {
+          Vector3D new_position;
+          HalfedgeIter AB = e->halfedge();
+          HalfedgeIter BA = AB->twin();
+          HalfedgeIter CA = AB->next()->next();
+          HalfedgeIter DB = BA->next()->next();
 
+          VertexIter A = AB->vertex();
+          VertexIter B = BA->vertex();
+          VertexIter C = CA->vertex();
+          VertexIter D = DB->vertex();
+
+          new_position = (static_cast<double>(3) / 8) * (A->position + B->position) + (static_cast<double>(1) / 8) * (C->position + D->position);
+
+          e->newPosition = new_position;
+      }
+      for (EdgeIter e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++) {
+          if (!((e->halfedge()->vertex()->isNew) || (e->halfedge()->twin()->vertex()->isNew))) {
+              Vector3D position(e->newPosition);
+              VertexIter M = mesh.splitEdge(e);
+              M->newPosition = position;
+          }
+      }
+      for (EdgeIter e = mesh.edgesBegin(); e != mesh.edgesEnd(); e++) {
+          if (e->isNew) {
+              if ((e->halfedge()->vertex()->isNew) != (e->halfedge()->twin()->vertex()->isNew)) {
+                  mesh.flipEdge(e);
+              }
+          }
+          e->isNew = false;
+      }
+      for (VertexIter v = mesh.verticesBegin(); v != mesh.verticesEnd(); v++) {
+          v->position = v->newPosition;
+          v->isNew = false;
+      }
   }
 }
