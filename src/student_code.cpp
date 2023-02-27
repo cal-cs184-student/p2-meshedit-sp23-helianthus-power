@@ -244,7 +244,7 @@ finish:
 
       A_B->halfedge() = AB;
       A_C->halfedge() = CA;
-      B_D->halfedge() = CD;
+      B_D->halfedge() = BD;
       C_D->halfedge() = DC;
 
       M_A->halfedge() = MA;
@@ -257,7 +257,7 @@ finish:
       MAB->halfedge() = AM;
       MCD->halfedge() = DM;
 
-      M->position = (A->position +B->position + C->position + D->position) / 4;
+      M->position = (B->position + C->position) / 2;
 
   finish:
     return VertexIter();
