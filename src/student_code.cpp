@@ -77,10 +77,10 @@ namespace CGL
     // TODO Part 2.
       std::vector<Vector3D> moving_curve;
       for (size_t i = 0; i < controlPoints.size(); ++i) {
-          Vector3D new_point(evaluate1D(controlPoints[i], v));
+          Vector3D new_point(evaluate1D(controlPoints[i], u));
           moving_curve.push_back(new_point);
       }
-      return evaluate1D(moving_curve, u);
+      return evaluate1D(moving_curve, v);
   }
 
   Vector3D Vertex::normal( void ) const
