@@ -203,10 +203,13 @@
             Briefly explain how you implemented the area-weighted vertex normals.
         </b>
         <p>
-            We used half-edge data structure to iterate through faces(triangles) incident to the vertex,i.e.,faces that have the given vertex as one of its vertices.For each such face, the weight is normal bt its area. In the last step,we normalized the sum of all area-weighted normals.
+            In Part 3, we implemented area-weighted normal vectors at vertices. We iterated through faces incident to a given vertex and weighted its normal by its area. We then normalized the sum of all area-weighted normals to compute an area-weighted vertex normal.
         </p>
         <p>
-            The part we implemented is Vertex::normal() in student_code.cpp.
+            To implement this, we used the HalfedgeMesh class and the Vertex class provided in halfedgeMesh.h. We utilized the half-edge data structure to iterate through faces incident to a given vertex, and we used the cross product of two vectors along the face to compute the normal of each face. We then weighted each face normal by its area, and finally, we normalized the sum of all area-weighted normals to obtain the area-weighted vertex normal.
+        </p>
+        <p>
+            To check our implementation, we ran meshedit with the teapot.dae file and pressed Q to toggle the area-averaged normals. We verified that the shading of the teapot became smoother and no longer flat, indicating that our implementation of Vertex::normal() was correct.
         </p>
         <br />
 
@@ -215,6 +218,9 @@
             Show screenshots of dae/teapot.dae (not .bez) comparing teapot shading with and without vertex normals. Use <kbd>Q</kbd> to toggle default flat shading and Phong shading.
         </b>
 
+        <p>
+            The following are the screenshots of dae/teapot.dae (not .bez) comparing teapot shading with and without vertex normals. We used Q to toggle default flat shading and Phong shading.
+        </p>
         <div align="middle">
             <table style="width:100%">
                 <tr align="center">
@@ -232,9 +238,7 @@
             </table>
         </div>
 
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
+
         <br />
 
 
