@@ -226,11 +226,11 @@
                 <tr align="center">
                     <td>
                         <img src="image2/dae1.png" align="middle" width="400px" />
-                        <figcaption> Without vertex normal</figcaption>
+                        <figcaption> Teapot shading without vertex normal</figcaption>
                     </td>
                     <td>
                         <img src="image2/dae2.png" align="middle" width="400px" />
-                        <figcaption> With vertex normal</figcaption>
+                        <figcaption> Teapot shading with vertex normal</figcaption>
                     </td>
                 </tr>
 
@@ -243,183 +243,191 @@
 
 
         <h3 align="middle">Part 4: Edge Flip</h3>
-        <p>
-            We implemented HalfedgeMesh::flipEdge(...) in student_code.cpp following the steps outlined in the prompt.
-            First, check if the edge was a boundary edge by checking if either of the neighboring faces was on a boundary loop. If it's a boundary edge, return immediately. If it's not a boundary edge, find the four half-edges invovled in the flip(the two half-edges on either side of the edge being flipped, and the two half-edges on the other side of those two half-edges).
-            Then, update the pointers of the four half-edges to reflect the new mesh structure. We used Halfedge::setNeighbors(...) to set all the pointers of a half-edge at once. Then update the pointers of the neighboring vertices, edges and faces. In the end, return a pointer to the new flipped edge.
-        </p>
-        <p>
-            To ensure that all pointers of all elements were still valid after the edge flip, we follow the steps outlined in the prompt. We drew a simple mesh and wrote down a list of all elements,then drew the mesh after the flip and wrote down a list of all elements in the modified mesh, not just the ones that had changed, to avoid missing a pointer.
-
-        </p>
-
-
-        <br />
-
-
         <b>
-            Show screenshots of the teapot before and after some edge flips.
+            Briefly explain how you implemented the edge flip operation and describe any interesting implementation / debugging tricks you have used.
         </b>
+            <p>
+                We implemented HalfedgeMesh::flipEdge(...) in student_code.cpp following the steps outlined in the prompt.
+                First, check if the edge was a boundary edge by checking if either of the neighboring faces was on a boundary loop. If it's a boundary edge, return immediately. If it's not a boundary edge, find the four half-edges invovled in the flip(the two half-edges on either side of the edge being flipped, and the two half-edges on the other side of those two half-edges).
+                Then, update the pointers of the four half-edges to reflect the new mesh structure. We used Halfedge::setNeighbors(...) to set all the pointers of a half-edge at once. Then update the pointers of the neighboring vertices, edges and faces. In the end, return a pointer to the new flipped edge.
+            </p>
+            <p>
+                To ensure that all pointers of all elements were still valid after the edge flip, we follow the steps outlined in the prompt. We drew a simple mesh and wrote down a list of all elements,then drew the mesh after the flip and wrote down a list of all elements in the modified mesh, not just the ones that had changed, to avoid missing a pointer.
 
-        <div align="middle">
-            <table style="width:100%">
-                <tr align="center">
-                    <td>
-                        <img src="image2/level0.png" align="middle" width="400px" />
-                        <figcaption>Level 0</figcaption>
-                    </td>
-                    <td>
-                        <img src="image2/level1.png" align="middle" width="400px" />
-                        <figcaption>Level 1</figcaption>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <br />
+            </p>
 
 
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+            <br />
 
 
-        <b>
-            We did not encounter major issues or bugs while implementing the edge flip operation. We used the check_for(...) debugging function to check which other elements in the mesh pointed to a given element, which helped ensure that all pointers were being set correctly. Overall, the implementation of the edge flip operation was straightforward and did not require any major debugging.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+            <b>
+                Show screenshots of the teapot before and after some edge flips.
+            </b>
+
+            <div align="middle">
+                <table style="width:100%">
+                    <tr align="center">
+                        <td>
+                            <img src="image2/level0.png" align="middle" width="400px" />
+                            <figcaption>Level 0</figcaption>
+                        </td>
+                        <td>
+                            <img src="image2/level1.png" align="middle" width="400px" />
+                            <figcaption>Level 1</figcaption>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+
+            <b>
+                Write about your eventful debugging journey, if you have experienced one.
+            </b>
+            <p>
+                We did not encounter major issues or bugs while implementing the edge flip operation. We used the check_for(...) debugging function to check which other elements in the mesh pointed to a given element, which helped ensure that all pointers were being set correctly. Overall, the implementation of the edge flip operation was straightforward and did not require any major debugging.
+
+            </p>
+                <br />
 
 
-        <h3 align="middle">Part 5: Edge Split</h3>
-        <p>
-            To implement the edge split operation, we first checked if the edge was a boundary edge by checking if either of the neighboring faces was on a boundary loop. If it was a boundary edge, we simply returned immediately.
-        </p>
-        <p>
-            Next, we created a new vertex at the midpoint of the edge, and assigned its position to the midpoint. We then created two new half-edges, one on either side of the split edge, and set their pointers correctly to create two new triangles. We also updated the pointers of all neighboring elements to point to the new elements created in the split operation.
-        </p>
-        <p>
-            To ensure that all pointers of all elements were still valid after the edge split, we followed the steps outlined in the prompt for Part 4. We drew a simple mesh and wrote down a list of all elements, then drew the mesh after the split and wrote down a list of all elements in the modified mesh. We made sure to set all pointers of all elements in the modified mesh, not just the ones that had changed, to avoid missing a pointer.
-        </p>
-        <br />
+                
+                
+               
 
 
-        <b>
-            Show screenshots of a mesh before and after some edge splits.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                <h3 align="middle">Part 5: Edge Split</h3>
+                <b>
+                    Briefly explain how you implemented the edge split operation and describe any interesting implementation / debugging tricks you have used.
+                </b>
+                    <p>
+                        To implement the edge split operation, we first checked if the edge was a boundary edge by checking if either of the neighboring faces was on a boundary loop. If it was a boundary edge, we simply returned immediately.
+                    </p>
+                    <p>
+                        Next, we created a new vertex at the midpoint of the edge, and assigned its position to the midpoint. We then created two new half-edges, one on either side of the split edge, and set their pointers correctly to create two new triangles. We also updated the pointers of all neighboring elements to point to the new elements created in the split operation.
+                    </p>
+                    <p>
+                        To ensure that all pointers of all elements were still valid after the edge split, we followed the steps outlined in the prompt for Part 4. We drew a simple mesh and wrote down a list of all elements, then drew the mesh after the split and wrote down a list of all elements in the modified mesh. We made sure to set all pointers of all elements in the modified mesh, not just the ones that had changed, to avoid missing a pointer.
+                    </p>
+                    <br />
 
 
-        <b>
-            Show screenshots of a mesh before and after a combination of both edge splits and edge flips.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                    <b>
+                        Show screenshots of a mesh before and after some edge splits.
+                    </b>
+                    <p>
+                        YOUR RESPONSE GOES HERE
+                    </p>
+                    <br />
 
 
-        <b>
-            Write about your eventful debugging journey, if you have experienced one.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                    <b>
+                        Show screenshots of a mesh before and after a combination of both edge splits and edge flips.
+                    </b>
+                    <p>
+                        YOUR RESPONSE GOES HERE
+                    </p>
+                    <br />
 
 
-        <b>
-            If you have implemented support for boundary edges, show screenshots of your implementation properly handling split operations on boundary edges.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                    <b>
+                        Write about your eventful debugging journey, if you have experienced one.
+                    </b>
+                    <p>
+                        YOUR RESPONSE GOES HERE
+                    </p>
+                    <br />
 
 
-        <h3 align="middle">Part 6: Loop Subdivision for Mesh Upsampling</h3>
-        <p>
-            In our implementation, we followed the recommended approach of updating vertex positions before subdividing the mesh. We looped over all vertices in the original mesh and calculated the new position for each vertex using the weighted average described in the instructions. We stored the new position in the newPosition member variable of each Vertex object. Then, we looped over all edges in the original mesh and calculated the new position for each midpoint using the same weighted average. We stored the new position in the newPosition member variable of each Edge object.
-        </p>
-        <p>
-            Next, we looped over all edges in the original mesh and split them in any order. For each new vertex created by a split, we set its newPosition to the correct position calculated earlier. If the new vertex was created by splitting an edge on the boundary of the mesh, we marked it as not isNew. Otherwise, we marked it as isNew.
-        </p>
-
-        <p>
-            Finally, we looped over all edges in the original mesh and flipped any new edge that connected an old vertex and a new vertex. For each existing vertex in the original mesh, we calculated its new position using the weighted average of its original position and the positions of its neighboring vertices, as described in the instructions. We stored the new position in the newPosition member variable of the Vertex object.
-        </p>
-        <br />
+                    <b>
+                        If you have implemented support for boundary edges, show screenshots of your implementation properly handling split operations on boundary edges.
+                    </b>
+                    <p>
+                        YOUR RESPONSE GOES HERE
+                    </p>
+                    <br />
 
 
-        <b>
-            Take some notes, as well as some screenshots, of your observations on how meshes behave after loop subdivision. What happens to sharp corners and edges? Can you reduce this effect by pre-splitting some edges?
-        </b>
+                    <h3 align="middle">Part 6: Loop Subdivision for Mesh Upsampling</h3>
+                    <b>
+                        Briefly explain how you implemented the loop subdivision and describe any interesting implementation / debugging tricks you have used.
+                    </b>
+                        <p>
+                            In our implementation, we followed the recommended approach of updating vertex positions before subdividing the mesh. We looped over all vertices in the original mesh and calculated the new position for each vertex using the weighted average described in the instructions. We stored the new position in the newPosition member variable of each Vertex object. Then, we looped over all edges in the original mesh and calculated the new position for each midpoint using the same weighted average. We stored the new position in the newPosition member variable of each Edge object.
+                        </p>
+                        <p>
+                            Next, we looped over all edges in the original mesh and split them in any order. For each new vertex created by a split, we set its newPosition to the correct position calculated earlier. If the new vertex was created by splitting an edge on the boundary of the mesh, we marked it as not isNew. Otherwise, we marked it as isNew.
+                        </p>
+
+                        <p>
+                            Finally, we looped over all edges in the original mesh and flipped any new edge that connected an old vertex and a new vertex. For each existing vertex in the original mesh, we calculated its new position using the weighted average of its original position and the positions of its neighboring vertices, as described in the instructions. We stored the new position in the newPosition member variable of the Vertex object.
+                        </p>
+                        <br />
+
+
+                        <b>
+                            Take some notes, as well as some screenshots, of your observations on how meshes behave after loop subdivision. What happens to sharp corners and edges? Can you reduce this effect by pre-splitting some edges?
+                        </b>
 
 
 
 
-        <p>
-            After loop subdivision, sharp corners and edges become smoother and more rounded. This effect can be reduced by pre-splitting some edges in the original mesh, which adds more vertices to the mesh and creates a more even distribution of vertices. In general, pre-splitting edges that are close to sharp corners or edges can help preserve their sharpness after subdivision.
-        </p>
+                        <p>
+                            After loop subdivision, sharp corners and edges become smoother and more rounded. This effect can be reduced by pre-splitting some edges in the original mesh, which adds more vertices to the mesh and creates a more even distribution of vertices. In general, pre-splitting edges that are close to sharp corners or edges can help preserve their sharpness after subdivision.
+                        </p>
 
 
 
 
 
-        <br />
+                        <br />
 
 
-        <b>
-            Load dae/cube.dae. Perform several iterations of loop subdivision on the cube. Notice that the cube becomes slightly asymmetric after repeated subdivisions. Can you pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? Document these effects and explain why they occur. Also explain how your pre-processing helps alleviate the effects.
-        </b>
-        <p>
-            When performing several iterations of loop subdivision on the cube mesh, we noticed that the cube became slightly asymmetric. This is because the original cube mesh has some edges that are not symmetrically placed with respect to their neighboring edges. To pre-process the cube mesh to achieve symmetric subdivision, we flipped and split some of these edges so that they were more symmetrically placed. Specifically, we flipped and split edges that were on the corners of the cube, and edges that were near the center of each face. After pre-processing, the cube subdivides more symmetrically and maintains its shape better after repeated subdivisions.
-        </p>
-        <br />
+                        <b>
+                            Load dae/cube.dae. Perform several iterations of loop subdivision on the cube. Notice that the cube becomes slightly asymmetric after repeated subdivisions. Can you pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? Document these effects and explain why they occur. Also explain how your pre-processing helps alleviate the effects.
+                        </b>
+                        <p>
+                            When performing several iterations of loop subdivision on the cube mesh, we noticed that the cube became slightly asymmetric. This is because the original cube mesh has some edges that are not symmetrically placed with respect to their neighboring edges. To pre-process the cube mesh to achieve symmetric subdivision, we flipped and split some of these edges so that they were more symmetrically placed. Specifically, we flipped and split edges that were on the corners of the cube, and edges that were near the center of each face. After pre-processing, the cube subdivides more symmetrically and maintains its shape better after repeated subdivisions.
+                        </p>
+                        <br />
 
 
-        <b>
-            If you have implemented any extra credit extensions, explain what you did and document how they work with screenshots.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                        <b>
+                            If you have implemented any extra credit extensions, explain what you did and document how they work with screenshots.
+                        </b>
+                        <p>
+                            YOUR RESPONSE GOES HERE
+                        </p>
+                        <br />
 
 
-        <h3 align="middle">Part 7 (Optional, Possible Extra Credit)</h3>
-        <b>
-            Save your best polygon mesh as partsevenmodel.dae in your docs folder and show us a screenshot of the mesh in your write-up.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                        <h3 align="middle">Part 7 (Optional, Possible Extra Credit)</h3>
+                        <b>
+                            Save your best polygon mesh as partsevenmodel.dae in your docs folder and show us a screenshot of the mesh in your write-up.
+                        </b>
+                        <p>
+                            YOUR RESPONSE GOES HERE
+                        </p>
+                        <br />
 
 
-        <b>
-            Include a series of screenshots showing your original mesh and your mesh after one and two rounds of subdivision. If you have used custom shaders, include screenshots of your mesh with those shaders applied as well.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                        <b>
+                            Include a series of screenshots showing your original mesh and your mesh after one and two rounds of subdivision. If you have used custom shaders, include screenshots of your mesh with those shaders applied as well.
+                        </b>
+                        <p>
+                            YOUR RESPONSE GOES HERE
+                        </p>
+                        <br />
 
 
-        <b>
-            Describe what you have done to enhance your mesh beyond the simple humanoid mesh described in the tutorial.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
+                        <b>
+                            Describe what you have done to enhance your mesh beyond the simple humanoid mesh described in the tutorial.
+                        </b>
+                        <p>
+                            YOUR RESPONSE GOES HERE
+                        </p>
+                        <br />
 
 
-        </b>
+                    </b>
     </div></body>
 </html>
