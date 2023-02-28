@@ -54,6 +54,7 @@
     <div>
 
         <h2 align="middle">Overview</h2>
+
         <p>
             YOUR RESPONSE GOES HERE
         </p>
@@ -67,7 +68,9 @@
 
         <h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
 
-
+        <b>
+            Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.
+        </b>
         <p>
             De Casteljau's algorithm is a recursive method used to evaluate points on a Bezier curve. It works by repeatedly dividing a Bezier curve into smaller segments, until each segment is just a straight line. At this point, the algorithm can directly compute the point on the curve that corresponds to a given parameter value.
             Given <b>n</b> (possibly intermediate) control points <b>p<SUB>1</SUB>, ..., p<SUB>n</SUB></b> and the parameter <b>t</b>, we use linear interpolation to compute the <b>n−1</b> intermediate control points at the parameter <b>t</b> in the next subdivision level, <b>p<SUB>1</SUB><SUP>'</SUP>,...,p<SUB>n</SUB><SUP>'</SUP></b>.
@@ -157,13 +160,16 @@
 
 
         <h3 align="middle">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h3>
+        <b>
+            Briefly explain how de Casteljau algorithm extends to Bezier surfaces and how you implemented it in order to evaluate Bezier surfaces.
+        </b>
         <p>
             For Part 2, we adapted the 1D de Casteljau algorithm used for Bezier curves to work for Bezier surfaces. We used a separable approach, where we first evaluated Bezier curves along each row and then evaluated a final Bezier curve along the resulting column of points.
         </p>
         <p>
             In practice, we implemented three parts in student_code.cpp: BezierPatch::evaluateStep(...),BezierPatch::evaluate1D(...),BezierPatch::evaluate(...).
-         </p>
-        <p>    
+        </p>
+        <p>
             To evaluate a point on a Bezier surface at a given (u,v) parameter, we first evaluate a set of intermediate control points for each row using de Casteljau's algorithm with the u parameter. Then, we evaluate the final control points for each column using de Casteljau's algorithm with the v parameter, using the intermediate control points obtained in the previous step as input.We implemented this algorithm in the BezierPatch::evaluateStep(...) function, which computes intermediate control points for a given parameter along a single row or column. We also implemented the BezierPatch::evaluate1D(...) function, which directly computes the final point on a single Bezier curve along a row or column. Finally, we implemented the BezierPatch::evaluate(...) function, which computes the final point on the Bezier surface at a given (u,v) parameter by calling BezierPatch::evaluate1D(...) on each row and column of control points.
 
         </p>
@@ -178,8 +184,13 @@
             Show a screenshot of bez/teapot.bez (not .dae) evaluated by your implementation.
         </b>
         <p>
-            YOUR RESPONSE GOES HERE
+            To test our implementation, we ran meshedit with the provided teapot.bez file and saw that it rendered a teapot on screen. We also tried modifying some of the control points and observed how the shape of the teapot changed.
         </p>
+
+        <div align="middle">
+            <img src="image2/df new.png" align="middle" width="50%" />
+        </div>
+
         <br />
 
 
@@ -187,9 +198,13 @@
 
         <h3 align="middle">Part 3: Area-Weighted Vertex Normals</h3>
 
+
         <b>
-            We used half-edge data structure to iterate through faces(triangles) incident to the vertex,i.e.,faces that have the given vertex as one of its vertices.For each such face, the weight is normal bt its area. In the last step,we normalized the sum of all area-weighted normals.
+            Briefly explain how you implemented the area-weighted vertex normals.
         </b>
+        <p>
+            We used half-edge data structure to iterate through faces(triangles) incident to the vertex,i.e.,faces that have the given vertex as one of its vertices.For each such face, the weight is normal bt its area. In the last step,we normalized the sum of all area-weighted normals.
+        </p>
         <p>
             The part we implemented is Vertex::normal() in student_code.cpp.
         </p>
@@ -213,7 +228,7 @@
                     </td>
                 </tr>
 
-          
+
             </table>
         </div>
 
@@ -341,7 +356,7 @@
             Take some notes, as well as some screenshots, of your observations on how meshes behave after loop subdivision. What happens to sharp corners and edges? Can you reduce this effect by pre-splitting some edges?
         </b>
 
-        
+
 
 
         <p>
@@ -401,5 +416,6 @@
         <br />
 
 
+        </b>
     </div></body>
 </html>
