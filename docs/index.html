@@ -56,22 +56,24 @@
         <h2 align="middle">Overview</h2>
 
         <p>
-            YOUR RESPONSE GOES HERE
+            The MeshEdit project involves implementing six different tasks that build on each other to create a robust mesh editing tool. The first two parts involve loading and displaying 3D models and implementing basic mesh data structures. Part 3 involves implementing the ability to edit mesh topology by adding and removing vertices, edges, and faces. Part 4 and 5 focus on local remeshing operations: edge flips and splits. Part 6 implements loop subdivision for upsampling the mesh.
+        </p>
+        <p>
+            Overall, these tasks require a solid understanding of computer graphics and data structures, as well as careful attention to detail when updating mesh topology and preserving correct pointers between mesh elements.
         </p>
 
 
+            <br />
 
-        <br />
 
+            <h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
 
-        <h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
+            <h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
 
-        <h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
-
-        <b>
-            Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.
-        </b>
-        <p>
+            <b>
+                Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.
+            </b>
+        </p><p>
             De Casteljau's algorithm is a recursive method used to evaluate points on a Bezier curve. It works by repeatedly dividing a Bezier curve into smaller segments, until each segment is just a straight line. At this point, the algorithm can directly compute the point on the curve that corresponds to a given parameter value.
             Given <b>n</b> (possibly intermediate) control points <b>p<SUB>1</SUB>, ..., p<SUB>n</SUB></b> and the parameter <b>t</b>, we use linear interpolation to compute the <b>n−1</b> intermediate control points at the parameter <b>t</b> in the next subdivision level, <b>p<SUB>1</SUB><SUP>'</SUP>,...,p<SUB>n</SUB><SUP>'</SUP></b>.
         </p>
