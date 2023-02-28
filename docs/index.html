@@ -246,44 +246,45 @@
         <b>
             Briefly explain how you implemented the edge flip operation and describe any interesting implementation / debugging tricks you have used.
         </b>
-            <p>
-                We implemented HalfedgeMesh::flipEdge(...) in student_code.cpp following the steps outlined in the prompt.
-                First, check if the edge was a boundary edge by checking if either of the neighboring faces was on a boundary loop. If it's a boundary edge, return immediately. If it's not a boundary edge, find the four half-edges invovled in the flip(the two half-edges on either side of the edge being flipped, and the two half-edges on the other side of those two half-edges).
-                Then, update the pointers of the four half-edges to reflect the new mesh structure. We used Halfedge::setNeighbors(...) to set all the pointers of a half-edge at once. Then update the pointers of the neighboring vertices, edges and faces. In the end, return a pointer to the new flipped edge.
-            </p>
-            <p>
-                To ensure that all pointers of all elements were still valid after the edge flip, we follow the steps outlined in the prompt. We drew a simple mesh and wrote down a list of all elements,then drew the mesh after the flip and wrote down a list of all elements in the modified mesh, not just the ones that had changed, to avoid missing a pointer.
+        <p>
+            In Part 4, we implemented the edge flip operation in the HalfedgeMesh class. To flip an edge, we first checked if the edge was a boundary edge, and if so, we returned immediately without doing anything. Then we updated the pointers of the vertices, edges, and half-edges of the affected triangles to point to the newly created triangles after the flip. We also updated the twin pointers of the adjacent half-edges to point to each other after the flip.
+        </p>
+        <p>
+            To debug our implementation, we first drew a simple mesh with a few edges and triangles and manually wrote down the pointers of all mesh elements before and after a flip operation. We then used the provided check_for() function to check if the pointers of all elements were updated correctly. We also printed out the mesh using the provided printHalfedge() function to see if the mesh looked correct.
+        </p>
 
-            </p>
-
-
+        <p>
+            We also encountered some issues where the mesh would appear to have holes after flipping some edges. We found that this was due to a bug in our implementation of setNeighbors() function in the Halfedge class. We were not properly updating the next and prev pointers of the half-edges, causing holes to appear in the mesh after a flip operation. Once we fixed this bug, our edge flip implementation worked correctly.
+        </p>
             <br />
 
 
             <b>
                 Show screenshots of the teapot before and after some edge flips.
             </b>
-
-            <div align="middle">
-                <table style="width:100%">
-                    <tr align="center">
-                        <td>
-                            <img src="image2/level0.png" align="middle" width="400px" />
-                            <figcaption>Level 0</figcaption>
-                        </td>
-                        <td>
-                            <img src="image2/level1.png" align="middle" width="400px" />
-                            <figcaption>Level 1</figcaption>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <br />
-
-            <b>
-                Write about your eventful debugging journey, if you have experienced one.
-            </b>
             <p>
+                Below are some screenshots of the teapot before and after some edge flips. As we flip more edges, the mesh becomes more distorted, but there are no holes created by the flips.
+            </p>
+                <div align="middle">
+                    <table style="width:100%">
+                        <tr align="center">
+                            <td>
+                                <img src="image2/level0.png" align="middle" width="400px" />
+                                <figcaption>Before edge flips</figcaption>
+                            </td>
+                            <td>
+                                <img src="image2/level1.png" align="middle" width="400px" />
+                                <figcaption>After some edge flips</figcaption>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br />
+
+                <b>
+                    Write about your eventful debugging journey, if you have experienced one.
+                </b>
+            </p><p>
                 We did not encounter major issues or bugs while implementing the edge flip operation. We used the check_for(...) debugging function to check which other elements in the mesh pointed to a given element, which helped ensure that all pointers were being set correctly. Overall, the implementation of the edge flip operation was straightforward and did not require any major debugging.
 
             </p>
