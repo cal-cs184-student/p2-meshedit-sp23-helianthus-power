@@ -158,13 +158,18 @@
 
         <h3 align="middle">Part 2: Bezier Surfaces with Separable 1D de Casteljau</h3>
         <p>
-            To use de Casteljau's algorithm to evaluate a Bezier surface, we start with the control points that define the surface. We then compute a series of intermediate points, known as "control points of the next degree," by interpolating between adjacent control points in both the u and v directions. We repeat this process recursively, each time using the previously computed points as the new control points, until we have computed a single point, which is the point on the surface corresponding to the given pair of parameter values, using recursion.
-            we compute the next level of control points by bilinearly interpolating between adjacent control points in both the u and v directions. We then use these new control points to repeat the process until we reach the desired level of precision.
-            The algorithm uses nested loops to iteratively compute the control points at each level in both the u and v directions, until it reaches the final point on the surface.
+            For Part 2, we adapted the 1D de Casteljau algorithm used for Bezier curves to work for Bezier surfaces. We used a separable approach, where we first evaluated Bezier curves along each row and then evaluated a final Bezier curve along the resulting column of points.
         </p>
         <p>
             In practice, we implemented three parts in student_code.cpp: BezierPatch::evaluateStep(...),BezierPatch::evaluate1D(...),BezierPatch::evaluate(...).
+         </p>
+        <p>    
+            To evaluate a point on a Bezier surface at a given (u,v) parameter, we first evaluate a set of intermediate control points for each row using de Casteljau's algorithm with the u parameter. Then, we evaluate the final control points for each column using de Casteljau's algorithm with the v parameter, using the intermediate control points obtained in the previous step as input.We implemented this algorithm in the BezierPatch::evaluateStep(...) function, which computes intermediate control points for a given parameter along a single row or column. We also implemented the BezierPatch::evaluate1D(...) function, which directly computes the final point on a single Bezier curve along a row or column. Finally, we implemented the BezierPatch::evaluate(...) function, which computes the final point on the Bezier surface at a given (u,v) parameter by calling BezierPatch::evaluate1D(...) on each row and column of control points.
 
+        </p>
+
+        <p>
+            We used std::vector to store control points, which made it easy to access and manipulate control points for each row and column. We also used the push_back() function to append intermediate control points to a std::vector.
         </p>
         <br />
 
@@ -219,11 +224,11 @@
 
 
         <h3 align="middle">Part 4: Edge Flip</h3>
-        <b>
+        <p>
             We implemented HalfedgeMesh::flipEdge(...) in student_code.cpp following the steps outlined in the prompt.
             First, check if the edge was a boundary edge by checking if either of the neighboring faces was on a boundary loop. If it's a boundary edge, return immediately. If it's not a boundary edge, find the four half-edges invovled in the flip(the two half-edges on either side of the edge being flipped, and the two half-edges on the other side of those two half-edges).
             Then, update the pointers of the four half-edges to reflect the new mesh structure. We used Halfedge::setNeighbors(...) to set all the pointers of a half-edge at once. Then update the pointers of the neighboring vertices, edges and faces. In the end, return a pointer to the new flipped edge.
-        </b>
+        </p>
         <p>
             To ensure that all pointers of all elements were still valid after the edge flip, we follow the steps outlined in the prompt. We drew a simple mesh and wrote down a list of all elements,then drew the mesh after the flip and wrote down a list of all elements in the modified mesh, not just the ones that had changed, to avoid missing a pointer.
 
@@ -261,7 +266,7 @@
 
 
         <b>
-            We did not encounter any major issues or bugs while implementing the edge flip operation. We used the check_for(...) debugging function to check which other elements in the mesh pointed to a given element, which helped ensure that all pointers were being set correctly. Overall, the implementation of the edge flip operation was straightforward and did not require any major debugging.
+            We did not encounter major issues or bugs while implementing the edge flip operation. We used the check_for(...) debugging function to check which other elements in the mesh pointed to a given element, which helped ensure that all pointers were being set correctly. Overall, the implementation of the edge flip operation was straightforward and did not require any major debugging.
         </b>
         <p>
             YOUR RESPONSE GOES HERE
@@ -319,11 +324,15 @@
 
 
         <h3 align="middle">Part 6: Loop Subdivision for Mesh Upsampling</h3>
-        <b>
-            Briefly explain how you implemented the loop subdivision and describe any interesting implementation / debugging tricks you have used.
-        </b>
         <p>
-            YOUR RESPONSE GOES HERE
+            In our implementation, we followed the recommended approach of updating vertex positions before subdividing the mesh. We looped over all vertices in the original mesh and calculated the new position for each vertex using the weighted average described in the instructions. We stored the new position in the newPosition member variable of each Vertex object. Then, we looped over all edges in the original mesh and calculated the new position for each midpoint using the same weighted average. We stored the new position in the newPosition member variable of each Edge object.
+        </p>
+        <p>
+            Next, we looped over all edges in the original mesh and split them in any order. For each new vertex created by a split, we set its newPosition to the correct position calculated earlier. If the new vertex was created by splitting an edge on the boundary of the mesh, we marked it as not isNew. Otherwise, we marked it as isNew.
+        </p>
+
+        <p>
+            Finally, we looped over all edges in the original mesh and flipped any new edge that connected an old vertex and a new vertex. For each existing vertex in the original mesh, we calculated its new position using the weighted average of its original position and the positions of its neighboring vertices, as described in the instructions. We stored the new position in the newPosition member variable of the Vertex object.
         </p>
         <br />
 
@@ -331,9 +340,18 @@
         <b>
             Take some notes, as well as some screenshots, of your observations on how meshes behave after loop subdivision. What happens to sharp corners and edges? Can you reduce this effect by pre-splitting some edges?
         </b>
+
+        
+
+
         <p>
-            YOUR RESPONSE GOES HERE
+            After loop subdivision, sharp corners and edges become smoother and more rounded. This effect can be reduced by pre-splitting some edges in the original mesh, which adds more vertices to the mesh and creates a more even distribution of vertices. In general, pre-splitting edges that are close to sharp corners or edges can help preserve their sharpness after subdivision.
         </p>
+
+
+
+
+
         <br />
 
 
@@ -341,7 +359,7 @@
             Load dae/cube.dae. Perform several iterations of loop subdivision on the cube. Notice that the cube becomes slightly asymmetric after repeated subdivisions. Can you pre-process the cube with edge flips and splits so that the cube subdivides symmetrically? Document these effects and explain why they occur. Also explain how your pre-processing helps alleviate the effects.
         </b>
         <p>
-            YOUR RESPONSE GOES HERE
+            When performing several iterations of loop subdivision on the cube mesh, we noticed that the cube became slightly asymmetric. This is because the original cube mesh has some edges that are not symmetrically placed with respect to their neighboring edges. To pre-process the cube mesh to achieve symmetric subdivision, we flipped and split some of these edges so that they were more symmetrically placed. Specifically, we flipped and split edges that were on the corners of the cube, and edges that were near the center of each face. After pre-processing, the cube subdivides more symmetrically and maintains its shape better after repeated subdivisions.
         </p>
         <br />
 
