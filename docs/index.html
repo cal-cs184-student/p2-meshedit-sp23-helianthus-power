@@ -63,16 +63,16 @@
         </p>
 
 
-            <br />
+        <br />
 
 
-            <h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
+        <h2 align="middle">Section I: Bezier Curves and Surfaces</h2>
 
-            <h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
+        <h3 align="middle">Part 1: Bezier Curves with 1D de Casteljau Subdivision</h3>
 
-            <b>
-                Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.
-            </b>
+        <b>
+            Briefly explain de Casteljau's algorithm and how you implemented it in order to evaluate Bezier curves.
+        </b>
         </p><p>
             De Casteljau's algorithm is a recursive method used to evaluate points on a Bezier curve. It works by repeatedly dividing a Bezier curve into smaller segments, until each segment is just a straight line. At this point, the algorithm can directly compute the point on the curve that corresponds to a given parameter value.
             Given <b>n</b> (possibly intermediate) control points <b>p<SUB>1</SUB>, ..., p<SUB>n</SUB></b> and the parameter <b>t</b>, we use linear interpolation to compute the <b>n−1</b> intermediate control points at the parameter <b>t</b> in the next subdivision level, <b>p<SUB>1</SUB><SUP>'</SUP>,...,p<SUB>n</SUB><SUP>'</SUP></b>.
@@ -190,7 +190,7 @@
         </p>
 
         <div align="middle">
-            <img src="image2/df new.png" align="middle" width="50%" />
+            <img src="image2/part2.png" align="middle" width="50%" />
         </div>
 
         <br />
@@ -227,11 +227,11 @@
             <table style="width:100%">
                 <tr align="center">
                     <td>
-                        <img src="image2/dae1.png" align="middle" width="400px" />
+                        <img src="image2/part3_1.png" align="middle" width="400px" />
                         <figcaption> Teapot shading without vertex normal</figcaption>
                     </td>
                     <td>
-                        <img src="image2/dae2.png" align="middle" width="400px" />
+                        <img src="image2/part3_2.png" align="middle" width="400px" />
                         <figcaption> Teapot shading with vertex normal</figcaption>
                     </td>
                 </tr>
@@ -269,11 +269,11 @@
             <table style="width:100%">
                 <tr align="center">
                     <td>
-                        <img src="image2/level0.png" align="middle" width="400px" />
+                        <img src="image2/before_flip.png" align="middle" width="400px" />
                         <figcaption>Before edge flips</figcaption>
                     </td>
                     <td>
-                        <img src="image2/level1.png" align="middle" width="400px" />
+                        <img src="image2/after_flip.png" align="middle" width="400px" />
                         <figcaption>After some edge flips</figcaption>
                     </td>
                 </tr>
@@ -314,18 +314,40 @@
         <b>
             Show screenshots of a mesh before and after some edge splits.
         </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
+        <div align="middle">
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="image2/before_flip.png" align="middle" width="400px" />
+                        <figcaption>Before edge flips</figcaption>
+                    </td>
+                    <td>
+                        <img src="image2/after_split.png" align="middle" width="400px" />
+                        <figcaption>After some edge flips</figcaption>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <br />
-
 
         <b>
             Show screenshots of a mesh before and after a combination of both edge splits and edge flips.
         </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
+        <div align="middle">
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="image2/before_flip.png" align="middle" width="400px" />
+                        <figcaption>Before edge flips</figcaption>
+                    </td>
+                    <td>
+                        <img src="image2/after_fs.png" align="middle" width="400px" />
+                        <figcaption>After some edge flips</figcaption>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
         <br />
 
 
@@ -341,9 +363,10 @@
         <b>
             If you have implemented support for boundary edges, show screenshots of your implementation properly handling split operations on boundary edges.
         </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
+     
+        <div align="middle">
+            <img src="image2/boundary.png" align="middle" width="50%" />
+        </div>
         <br />
 
 
@@ -368,7 +391,32 @@
             Take some notes, as well as some screenshots, of your observations on how meshes behave after loop subdivision. What happens to sharp corners and edges? Can you reduce this effect by pre-splitting some edges?
         </b>
 
-
+        <div align="middle">
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="image2/l0.png" align="middle" width="400px" />
+                        <figcaption>Level 0</figcaption>
+                    </td>
+                    <td>
+                        <img src="image2/l1.png" align="middle" width="400px" />
+                        <figcaption>Level 1</figcaption>
+                    </td>
+                </tr>
+             
+                <tr align="center">
+                    <td>
+                        <img src="image2/l2.png" align="middle" width="400px" />
+                        <figcaption>Level 2</figcaption>
+                    </td>
+                    <td>
+                        <img src="image2/l3.png" align="middle" width="400px" />
+                        <figcaption>Level 3</figcaption>
+                    </td>
+                </tr>
+              
+            </table>
+        </div>
 
 
         <p>

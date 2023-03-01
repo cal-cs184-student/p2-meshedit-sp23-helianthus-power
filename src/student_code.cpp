@@ -167,7 +167,7 @@ namespace CGL
     ABC->halfedge() = BA;
     BCD->halfedge() = CD;
 
-finish:
+    finish:
     return e0;
   }
 
@@ -263,7 +263,7 @@ finish:
 
       M->position = (B->position + C->position) / 2;
 
-  finish:
+    finish:
     return M;
   }
 
