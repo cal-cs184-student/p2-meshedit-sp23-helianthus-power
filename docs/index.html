@@ -141,19 +141,33 @@
 
 
 
-        <b>
-            The screenshot for the curve2 we define is below:
-        </b>
+        <p>
+            The screenshot for the curve3 we define is below:
+        </p>
 
         <div align="middle">
             <img src="image2/df new.png" align="middle" width="50%" />
         </div>
 
         <p>
-            The screenshot of a slightly different Bezier curve is:
+            Screenshots of a slightly different Bezier curve where we adjusted the value of t by scrolling the mouse wheel:
         </p>
         <div align="middle">
-            <img src="image2/different curve.png" align="middle" width="50%" />
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="image2/different curve1.png" align="middle" width="300px" />
+                    </td>
+                    <td>
+                        <img src="image2/different curve.png" align="middle" width="300px" />
+                    </td>
+                    <td>
+                        <img src="image2/different curve3.png" align="middle" width="300px" />
+                    </td>
+                </tr>
+
+
+            </table>
         </div>
 
 
@@ -319,11 +333,11 @@
                 <tr align="center">
                     <td>
                         <img src="image2/before_flip.png" align="middle" width="400px" />
-                        <figcaption>Before edge flips</figcaption>
+                        <figcaption>Before edge splits</figcaption>
                     </td>
                     <td>
                         <img src="image2/after_split.png" align="middle" width="400px" />
-                        <figcaption>After some edge flips</figcaption>
+                        <figcaption>After some edge splits</figcaption>
                     </td>
                 </tr>
             </table>
@@ -337,12 +351,12 @@
             <table style="width:100%">
                 <tr align="center">
                     <td>
-                        <img src="image2/before_flip.png" align="middle" width="400px" />
-                        <figcaption>Before edge flips</figcaption>
+                        <img src="image2/After some flips.png" align="middle" width="400px" />
+                        <figcaption>First, some flips were performed</figcaption>
                     </td>
                     <td>
-                        <img src="image2/after_fs.png" align="middle" width="400px" />
-                        <figcaption>After some edge flips</figcaption>
+                        <img src="image2/After some splits.png" align="middle" width="400px" />
+                        <figcaption>Then we splitted the adjacent edges</figcaption>
                     </td>
                 </tr>
             </table>
@@ -355,19 +369,16 @@
             Write about your eventful debugging journey, if you have experienced one.
         </b>
         <p>
-            We did not experience any eventful debugging journeys for this part. Our implementation worked correctly after a few minor bug fixes.
+            In this part, we originally set the coordinate of the new vertex \(m\) resulted from the split to be the average of all four orignal points. This resulted the new vertex to be lower than supposed to in some cases. After discussing with classmates, the problem with resolved.
         </p>
-        <br />
 
-
-        <b>
-            If you have implemented support for boundary edges, show screenshots of your implementation properly handling split operations on boundary edges.
-        </b>
-     
         <div align="middle">
-            <img src="image2/boundary.png" align="middle" width="50%" />
+            <img src="image2/Part5 bug.png" align="middle" width="50%" />
+            <figcaption>Wrong vertex position caused by said bug</figcaption>
         </div>
+
         <br />
+
 
 
         <h3 align="middle">Part 6: Loop Subdivision for Mesh Upsampling</h3>
@@ -403,7 +414,7 @@
                         <figcaption>Level 1</figcaption>
                     </td>
                 </tr>
-             
+
                 <tr align="center">
                     <td>
                         <img src="image2/l2.png" align="middle" width="400px" />
@@ -414,7 +425,7 @@
                         <figcaption>Level 3</figcaption>
                     </td>
                 </tr>
-              
+
             </table>
         </div>
 
@@ -439,31 +450,32 @@
         <br />
 
 
-        <b>
-            If you have implemented any extra credit extensions, explain what you did and document how they work with screenshots.
-        </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
-        <br />
-
-
         <h3 align="middle">Part 7 (Optional, Possible Extra Credit)</h3>
         <b>
             Save your best polygon mesh as partsevenmodel.dae in your docs folder and show us a screenshot of the mesh in your write-up.
         </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
+        <div align="middle">
+            <img src="image2/Teacup.png" align="middle" width="50%" />
+            <figcaption>This is a teacup</figcaption>
+        </div>
         <br />
 
 
         <b>
             Include a series of screenshots showing your original mesh and your mesh after one and two rounds of subdivision. If you have used custom shaders, include screenshots of your mesh with those shaders applied as well.
         </b>
-        <p>
-            YOUR RESPONSE GOES HERE
-        </p>
+        <div align="middle">
+            <table style="width:100%">
+                <tr align="center">
+                    <td>
+                        <img src="image2/Teacup 1 split.png" align="middle" width="400px" />
+                    </td>
+                    <td>
+                        <img src="image2/Teacup 2 split.png" align="middle" width="400px" />
+                    </td>
+                </tr>
+            </table>
+        </div>
         <br />
 
 
@@ -471,11 +483,21 @@
             Describe what you have done to enhance your mesh beyond the simple humanoid mesh described in the tutorial.
         </b>
         <p>
-            YOUR RESPONSE GOES HERE
+            We didn't model a humanoid. We modelled a teacup that could go with the teapot given in the base files. The cup body was generated from a cone which was drawn by following the edges of a picture reference of a teacup. This generates a flat, single sided mesh. Then, using the blender solidify modifier, we can make the cone two sided, thus both sides of the cup. The shape of the handle was generated with a brezier curve, which was also solidified to form the original shape. Lastly, the two parts were fused together by deleting some faces and making new ones.
+        </p>
+
+        <p>
+            However, this didn't work very well because meshedit does not load dae models from blender 3.3 properly even after updating collada.cpp.
         </p>
         <br />
 
 
         </b>
+
+        <h3 align="middle">Github Live Webpage</h3>
+        <p>
+            Webpage: https://cal-cs184-student.github.io/p2-meshedit-sp23-helianthus-power/
+        </p>
+
     </div></body>
 </html>
